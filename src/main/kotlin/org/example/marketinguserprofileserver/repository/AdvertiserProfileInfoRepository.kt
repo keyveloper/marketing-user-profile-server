@@ -10,6 +10,7 @@ class AdvertiserProfileInfoRepository {
     fun save(domain: AdvertiserProfile): Long {
         val entity = AdvertiserProfileInfoEntity.new {
             advertiserId = domain.advertiserId
+            userProfileDraftId = domain.userProfileDraftId
             serviceInfo = domain.serviceInfo
             locationBrief = domain.locationBrief
             introduction = domain.introduction
@@ -25,6 +26,7 @@ class AdvertiserProfileInfoRepository {
         val entity = AdvertiserProfileInfoEntity.findById(targetId)
         return if (entity != null) {
             entity.advertiserId = domain.advertiserId
+            entity.userProfileDraftId = domain.userProfileDraftId
             entity.serviceInfo = domain.serviceInfo
             entity.locationBrief = domain.locationBrief
             entity.introduction = domain.introduction

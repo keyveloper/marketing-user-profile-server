@@ -24,6 +24,7 @@ class AdvertiserProfileInfoService(
             GetAdvertiserProfileInfoResult(
                 id = entity.id.value,
                 advertiserId = entity.advertiserId,
+                userProfileDraftId = entity.userProfileDraftId,
                 serviceInfo = entity.serviceInfo,
                 locationBrief = entity.locationBrief,
                 introduction = entity.introduction,

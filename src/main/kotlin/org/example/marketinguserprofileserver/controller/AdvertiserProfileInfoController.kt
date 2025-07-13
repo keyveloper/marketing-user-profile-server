@@ -20,6 +20,7 @@ class AdvertiserProfileInfoController(
     ): ResponseEntity<SaveAdvertiserProfileInfoResponseFromServer> {
         val domain = AdvertiserProfile(
             advertiserId = request.advertiserId,
+            userProfileDraftId = request.userProfileDraftId,
             serviceInfo = request.serviceInfo,
             locationBrief = request.locationBrief,
             introduction = request.introduction
@@ -68,6 +69,7 @@ class AdvertiserProfileInfoController(
     ): ResponseEntity<UpdateAdvertiserProfileInfoResponseFromServer> {
         val domain = AdvertiserProfile(
             advertiserId = request.advertiserId,
+            userProfileDraftId = request.userProfileDraftId,
             serviceInfo = request.serviceInfo,
             locationBrief = request.locationBrief,
             introduction = request.introduction

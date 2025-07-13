@@ -9,6 +9,7 @@ class InfluencerProfileInfoRepository {
 
     fun save(domain: InfluencerProfile): Long {
         val entity = InfluencerProfileInfoEntity.new {
+            userProfileDraftId = domain.userProfileDraftId
             influencerId = domain.influencerId
             introduction = domain.introduction
             job = domain.job
@@ -23,6 +24,7 @@ class InfluencerProfileInfoRepository {
     fun updateById(targetId: Long, domain: InfluencerProfile): Int {
         val entity = InfluencerProfileInfoEntity.findById(targetId)
         return if (entity != null) {
+            entity.userProfileDraftId = domain.userProfileDraftId
             entity.influencerId = domain.influencerId
             entity.introduction = domain.introduction
             entity.job = domain.job

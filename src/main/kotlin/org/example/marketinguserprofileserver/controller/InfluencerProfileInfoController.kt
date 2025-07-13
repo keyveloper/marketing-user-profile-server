@@ -19,6 +19,7 @@ class InfluencerProfileInfoController(
         @RequestBody request: SaveInfluencerProfileInfoRequest
     ): ResponseEntity<SaveInfluencerProfileInfoResponseFromServer> {
         val domain = InfluencerProfile(
+            userProfileDraftId = request.userProfileDraftId,
             influencerId = request.influencerId,
             introduction = request.introduction,
             job = request.job
@@ -66,6 +67,7 @@ class InfluencerProfileInfoController(
         @RequestBody request: UpdateInfluencerProfileInfoRequest
     ): ResponseEntity<UpdateInfluencerProfileInfoResponseFromServer> {
         val domain = InfluencerProfile(
+            userProfileDraftId = request.userProfileDraftId,
             influencerId = request.influencerId,
             introduction = request.introduction,
             job = request.job

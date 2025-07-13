@@ -23,6 +23,7 @@ class InfluencerProfileInfoService(
             val entity = influencerProfileInfoRepository.findById(targetId) ?: return@transaction null
             GetInfluencerProfileInfoResult(
                 id = entity.id.value,
+                userProfileDraftId = entity.userProfileDraftId,
                 influencerId = entity.influencerId,
                 introduction = entity.introduction,
                 job = entity.job,

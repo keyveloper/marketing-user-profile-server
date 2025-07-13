@@ -1,7 +1,10 @@
 package org.example.marketinguserprofileserver.dto.controller
 
+import java.util.UUID
+
 data class SaveInfluencerProfileInfoRequest(
-    val influencerId: String,
+    val userProfileDraftId: UUID,
+    val influencerId: UUID,
     val introduction: String?,
     val job: String?
 )

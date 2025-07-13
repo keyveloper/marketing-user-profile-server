@@ -1,8 +1,11 @@
 package org.example.marketinguserprofileserver.dto
 
+import java.util.UUID
+
 data class InfluencerProfile(
     val id: Long? = null,
-    val influencerId: String,
+    val userProfileDraftId: UUID,
+    val influencerId: UUID,
     val introduction: String?,
     val job: String?,
     val createdAt: Long? = null,

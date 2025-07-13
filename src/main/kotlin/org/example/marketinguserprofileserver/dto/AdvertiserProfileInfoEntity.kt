@@ -7,6 +7,7 @@ class AdvertiserProfileInfoEntity(id: EntityID<Long>): BaseDateEntity(id, Advert
     companion object: BaseDateEntityClass<AdvertiserProfileInfoEntity>(AdvertiserProfileInfosTable)
 
     var advertiserId by AdvertiserProfileInfosTable.advertiserId
+    var userProfileDraftId by AdvertiserProfileInfosTable.userProfileDraftId
     var serviceInfo by AdvertiserProfileInfosTable.serviceInfo
     var locationBrief by AdvertiserProfileInfosTable.locationBrief
     var introduction by AdvertiserProfileInfosTable.introduction
