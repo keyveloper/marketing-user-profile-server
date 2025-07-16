@@ -6,7 +6,9 @@
       "Bash(findstr:*)",
       "Bash(dir \"C:\\Users\\dideh\\Desktop\\marketing\\marketing-profile-api-server\\src\\test\\kotlin\\org\\example\" /b)",
       "Bash(dir:*)",
-      "Bash(move \"C:\\Users\\dideh\\Desktop\\marketing\\marketing-profile-api-server\\src\\test\\kotlin\\org\\example\\marketingprofileapiserver\\MarketingProfileApiServerApplicationTests.kt\" \"C:\\Users\\dideh\\Desktop\\marketing\\marketing-profile-api-server\\src\\test\\kotlin\\org\\example\\marketingprofilesapierver\\MarketingProfileApiServerApplicationTests.kt\")"
+      "Bash(move \"C:\\Users\\dideh\\Desktop\\marketing\\marketing-profile-api-server\\src\\test\\kotlin\\org\\example\\marketingprofileapiserver\\MarketingProfileApiServerApplicationTests.kt\" \"C:\\Users\\dideh\\Desktop\\marketing\\marketing-profile-api-server\\src\\test\\kotlin\\org\\example\\marketingprofilesapierver\\MarketingProfileApiServerApplicationTests.kt\")",
+      "Bash(find:*)",
+      "Bash(./gradlew clean:*)"
     ],
     "deny": [],
     "ask": []

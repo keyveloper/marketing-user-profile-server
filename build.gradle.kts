@@ -53,6 +53,9 @@ dependencies {
     // kotlinx-datetime
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
 
+    // Jackson for JSON serialization
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+
     // AWS
     implementation("io.awspring.cloud:spring-cloud-starter-aws:2.4.4") // Spring Cloud AWS
     implementation("software.amazon.awssdk:s3:2.25.31") // AWS SDK v2 (2025년 최신 안정 버전)
