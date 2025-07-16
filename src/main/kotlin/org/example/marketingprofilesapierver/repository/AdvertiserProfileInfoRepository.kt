@@ -2,6 +2,7 @@ package org.example.marketingprofilesapierver.repository
 
 import org.example.marketingprofilesapierver.dto.AdvertiserProfile
 import org.example.marketingprofilesapierver.dto.AdvertiserProfileInfoEntity
+import org.example.marketingprofilesapierver.exception.DuplicatedAdvertiserProfileInfoEntityException
 import org.example.marketingprofilesapierver.table.AdvertiserProfileInfosTable
 import org.springframework.stereotype.Repository
 import java.util.UUID
@@ -10,6 +11,13 @@ import java.util.UUID
 class AdvertiserProfileInfoRepository {
 
     fun save(domain: AdvertiserProfile): Long {
+        val existingEntity = findByAdvertiserId(domain.advertiserId)
+
+        if (existingEntity != null) {
+            throw DuplicatedAdvertiserProfileInfoEntityException(domain.advertiserId)
+        }
+
+        // Create new entity
         val entity = AdvertiserProfileInfoEntity.new {
             advertiserId = domain.advertiserId
             userProfileDraftId = domain.userProfileDraftId

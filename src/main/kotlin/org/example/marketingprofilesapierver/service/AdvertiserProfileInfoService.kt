@@ -2,9 +2,12 @@ package org.example.marketingprofilesapierver.service
 
 import org.example.marketingprofilesapierver.dto.AdvertiserProfile
 import org.example.marketingprofilesapierver.dto.service.*
+import org.example.marketingprofilesapierver.enums.MSAServiceErrorCode
+import org.example.marketingprofilesapierver.exception.MSAServerException
 import org.example.marketingprofilesapierver.repository.AdvertiserProfileInfoRepository
-import org.example.marketinguserprofileserver.dto.service.UpdateAdvertiserProfileInfoResult
+import org.example.marketingprofileapiserver.dto.service.UpdateAdvertiserProfileInfoResult
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -16,11 +19,21 @@ class AdvertiserProfileInfoService(
     fun saveAdvertiserProfileInfo(domain: AdvertiserProfile): SaveAdvertiserProfileInfoResult {
         return transaction {
             val savedId = advertiserProfileInfoRepository.save(domain)
-            SaveAdvertiserProfileInfoResult(savedId = savedId)
+            SaveAdvertiserProfileInfoResult(savedEntityId = savedId)
         }
     }
 
-    fun getAdvertiserProfileInfoById(advertiserId: UUID): GetAdvertiserProfileInfoResult? {
+    fun getAdvertiserProfileInfoById(advertiserIdStr: String): GetAdvertiserProfileInfoResult? {
+        val advertiserId = try {
+            UUID.fromString(advertiserIdStr)
+        } catch (e: IllegalArgumentException) {
+            throw MSAServerException(
+                httpStatus = HttpStatus.BAD_REQUEST,
+                msaServiceErrorCode = MSAServiceErrorCode.INVALID_UUID_FORMAT,
+                logics = "AdvertiserProfileInfoService.getAdvertiserProfileInfoById",
+                message = "Invalid UUID format: $advertiserIdStr"
+            )
+        }
         return transaction {
             val entity = advertiserProfileInfoRepository.findByAdvertiserId(advertiserId) ?: return@transaction null
             GetAdvertiserProfileInfoResult(
@@ -36,14 +49,35 @@ class AdvertiserProfileInfoService(
         }
     }
 
-    fun updateAdvertiserProfileInfoById(advertiserId: UUID, domain: AdvertiserProfile): UpdateAdvertiserProfileInfoResult {
+    fun updateAdvertiserProfileInfoById(advertiserIdStr: String, domain: AdvertiserProfile)
+    : UpdateAdvertiserProfileInfoResult {
+        val advertiserId = try {
+            UUID.fromString(advertiserIdStr)
+        } catch (e: IllegalArgumentException) {
+            throw MSAServerException(
+                httpStatus = HttpStatus.BAD_REQUEST,
+                msaServiceErrorCode = MSAServiceErrorCode.INVALID_UUID_FORMAT,
+                logics = "AdvertiserProfileInfoService.updateAdvertiserProfileInfoById",
+                message = "Invalid UUID format: $advertiserIdStr"
+            )
+        }
         return transaction {
             val updatedCount = advertiserProfileInfoRepository.updateByAdvertiserId(advertiserId, domain)
             UpdateAdvertiserProfileInfoResult(updatedCount = updatedCount)
         }
     }
 
-    fun deleteAdvertiserProfileInfoById(advertiserId: UUID): DeleteAdvertiserProfileInfoResult {
+    fun deleteAdvertiserProfileInfoById(advertiserIdStr: String): DeleteAdvertiserProfileInfoResult {
+        val advertiserId = try {
+            UUID.fromString(advertiserIdStr)
+        } catch (e: IllegalArgumentException) {
+            throw MSAServerException(
+                httpStatus = HttpStatus.BAD_REQUEST,
+                msaServiceErrorCode = MSAServiceErrorCode.INVALID_UUID_FORMAT,
+                logics = "AdvertiserProfileInfoService.deleteAdvertiserProfileInfoById",
+                message = "Invalid UUID format: $advertiserIdStr"
+            )
+        }
         return transaction {
             val deletedCount = advertiserProfileInfoRepository.deleteByAdvertiserId(advertiserId)
             DeleteAdvertiserProfileInfoResult(deletedCount = deletedCount)

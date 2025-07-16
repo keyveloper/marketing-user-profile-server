@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class MarketingUserProfileServerApplication
+class MarketingProfileApiServerApplication
 
 fun main(args: Array<String>) {
-    runApplication<MarketingUserProfileServerApplication>(*args)
+    runApplication<MarketingProfileApiServerApplication>(*args)
 }

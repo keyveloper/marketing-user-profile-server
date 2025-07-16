@@ -1,10 +1,9 @@
-package org.example.marketinguserprofileserver
+package org.example.marketingprofilesapierver
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest
-class MarketingUserProfileServerApplicationTests {
+class MarketingProfileApiServerApplicationTests {
 
     @Test
     fun contextLoads() {

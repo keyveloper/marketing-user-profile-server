@@ -1,18 +1,12 @@
 package org.example.marketingprofilesapierver.controller
 
-import org.example.marketingprofilesapierver.dto.controller.DeleteAdvertiserProfileInfoResponseFromServer
-import org.example.marketingprofilesapierver.dto.controller.GetAdvertiserProfileInfoResponseFromServer
-import org.example.marketingprofilesapierver.dto.controller.SaveAdvertiserProfileInfoApiRequest
-import org.example.marketingprofilesapierver.dto.controller.SaveAdvertiserProfileInfoResponseFromServer
-import org.example.marketingprofilesapierver.dto.controller.UpdateAdvertiserProfileInfoResponseFromServer
 import org.example.marketingprofilesapierver.dto.AdvertiserProfile
-import org.example.marketingprofilesapierver.dto.controller.UpdateAdvertiserProfileInfoApiRequest
+import org.example.marketingprofilesapierver.dto.controller.*
 import org.example.marketingprofilesapierver.enums.MSAServiceErrorCode
 import org.example.marketingprofilesapierver.service.AdvertiserProfileInfoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/advertiser-profiles")
@@ -45,7 +39,7 @@ class AdvertiserProfileInfoController(
 
     @GetMapping("/{advertiserId}")
     fun getAdvertiserProfileInfoById(
-        @PathVariable advertiserId: UUID
+        @PathVariable advertiserId: String
     ): ResponseEntity<GetAdvertiserProfileInfoResponseFromServer> {
         val getAdvertiserProfileInfoResult = advertiserProfileInfoService.getAdvertiserProfileInfoById(advertiserId)
 
@@ -70,7 +64,7 @@ class AdvertiserProfileInfoController(
 
     @PutMapping("/{advertiserId}")
     fun updateAdvertiserProfileInfoById(
-        @PathVariable advertiserId: UUID,
+        @PathVariable advertiserId: String,
         @RequestBody request: UpdateAdvertiserProfileInfoApiRequest
     ): ResponseEntity<UpdateAdvertiserProfileInfoResponseFromServer> {
         val domain = AdvertiserProfile(
@@ -94,7 +88,7 @@ class AdvertiserProfileInfoController(
 
     @DeleteMapping("/{advertiserId}")
     fun deleteAdvertiserProfileInfoById(
-        @PathVariable advertiserId: UUID
+        @PathVariable advertiserId: String
     ): ResponseEntity<DeleteAdvertiserProfileInfoResponseFromServer> {
         val deleteAdvertiserProfileInfoResult = advertiserProfileInfoService.deleteAdvertiserProfileInfoById(advertiserId)
 

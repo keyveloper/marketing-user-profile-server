@@ -2,7 +2,7 @@ package org.example.marketingprofilesapierver.dto.controller
 
 import org.example.marketingprofilesapierver.dto.MSABusinessErrorResponse
 import org.example.marketingprofilesapierver.enums.MSAServiceErrorCode
-import org.example.marketinguserprofileserver.dto.service.UpdateAdvertiserProfileInfoResult
+import org.example.marketingprofileapiserver.dto.service.UpdateAdvertiserProfileInfoResult
 import org.springframework.http.HttpStatus
 
 data class UpdateAdvertiserProfileInfoResponseFromServer(

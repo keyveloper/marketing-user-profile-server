@@ -1,5 +1,5 @@
-package org.example.marketinguserprofileserver.dto.service
+package org.example.marketingprofilesapierver.dto.service
 
 data class SaveInfluencerProfileInfoResult(
-    val savedId: Long
+    val savedEntityId: Long
 )

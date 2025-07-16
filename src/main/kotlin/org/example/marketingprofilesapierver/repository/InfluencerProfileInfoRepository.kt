@@ -2,6 +2,7 @@ package org.example.marketingprofilesapierver.repository
 
 import org.example.marketingprofilesapierver.dto.InfluencerProfile
 import org.example.marketingprofilesapierver.dto.InfluencerProfileInfoEntity
+import org.example.marketingprofilesapierver.exception.DuplicatedInfluencerProfileInfoEntityException
 import org.example.marketingprofilesapierver.table.InfluencerProfileInfosTable
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -10,6 +11,13 @@ import java.util.*
 class InfluencerProfileInfoRepository {
 
     fun save(domain: InfluencerProfile): Long {
+        val existingEntity = findByInfluencerId(domain.influencerId)
+
+        if (existingEntity != null) {
+            throw DuplicatedInfluencerProfileInfoEntityException(domain.influencerId)
+        }
+
+        // Create new entity
         val entity = InfluencerProfileInfoEntity.new {
             userProfileDraftId = domain.userProfileDraftId
             influencerId = domain.influencerId

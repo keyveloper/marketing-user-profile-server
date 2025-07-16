@@ -34,12 +34,12 @@ class InfluencerProfileInfoController(
             msaServiceErrorCode = MSAServiceErrorCode.OK
         )
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(response)
+        return ResponseEntity.ok(response)
     }
 
     @GetMapping("/{influencerId}")
     fun getInfluencerProfileInfoById(
-        @PathVariable influencerId: UUID
+        @PathVariable influencerId: String
     ): ResponseEntity<GetInfluencerProfileInfoResponseFromServer> {
         val getInfluencerProfileInfoResult = influencerProfileInfoService.getInfluencerProfileInfoById(influencerId)
 
@@ -64,7 +64,7 @@ class InfluencerProfileInfoController(
 
     @PutMapping("/{influencerId}")
     fun updateInfluencerProfileInfoById(
-        @PathVariable influencerId: UUID,
+        @PathVariable influencerId: String,
         @RequestBody request: UpdateInfluencerProfileInfoApiRequest
     ): ResponseEntity<UpdateInfluencerProfileInfoResponseFromServer> {
         val domain = InfluencerProfile(
@@ -87,7 +87,7 @@ class InfluencerProfileInfoController(
 
     @DeleteMapping("/{influencerId}")
     fun deleteInfluencerProfileInfoById(
-        @PathVariable influencerId: UUID
+        @PathVariable influencerId: String
     ): ResponseEntity<DeleteInfluencerProfileInfoResponseFromServer> {
         val deleteInfluencerProfileInfoResult = influencerProfileInfoService.deleteInfluencerProfileInfoById(influencerId)
 
