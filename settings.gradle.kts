@@ -1,1 +1,1 @@
-rootProject.name = "marketing-user-profile-server"
+rootProject.name = "marketing-profile-api-server"

@@ -33,15 +33,13 @@ class AdvertiserProfileInfoController(
 
         val saveAdvertiserProfileInfoResult = advertiserProfileInfoService.saveAdvertiserProfileInfo(domain)
 
-        val response = SaveAdvertiserProfileInfoResponseFromServer.of(
-            result = saveAdvertiserProfileInfoResult,
-            httpStatus = HttpStatus.CREATED,
-            msaServiceErrorCode = MSAServiceErrorCode.OK
+        return ResponseEntity.ok(
+            SaveAdvertiserProfileInfoResponseFromServer.of(
+                result = saveAdvertiserProfileInfoResult,
+                httpStatus = HttpStatus.OK,
+                msaServiceErrorCode = MSAServiceErrorCode.OK
+            )
         )
-
-        logger.info { "saveAdvertiserProfileInfo response: $response" }
-
-        return ResponseEntity.ok().body(response)
     }
 
     @GetMapping("/{advertiserId}")

@@ -1,14 +1,14 @@
 plugins {
-    kotlin("jvm") version "2.2.21"
-    kotlin("plugin.spring") version "2.2.21"
-    id("org.springframework.boot") version "4.0.0"
+    kotlin("jvm") version "2.1.0"
+    kotlin("plugin.spring") version "2.1.0"
+    id("org.springframework.boot") version "3.4.0"
     id("io.spring.dependency-management") version "1.1.7"
 
     // for jpa no-arg constructor
-    kotlin("plugin.jpa") version "1.9.25"
+    kotlin("plugin.jpa") version "2.1.0"
 
     // for query DSL
-    kotlin("kapt") version "1.9.25"
+    kotlin("kapt") version "2.1.0"
 }
 
 group = "org.example"
@@ -63,8 +63,13 @@ dependencies {
 
 kotlin {
     compilerOptions {
-        freeCompilerArgs.addAll("-Xjsr305=strict", "-Xannotation-default-target=param-property")
+        freeCompilerArgs.addAll("-Xjsr305=strict")
     }
+}
+
+// Configure kapt to work with Kotlin 2.1.0
+kapt {
+    useBuildCache = false
 }
 
 tasks.withType<Test> {
