@@ -5,6 +5,7 @@ import java.util.UUID
 data class AdvertiserProfile(
     val id: Long? = null,
     val advertiserId: UUID,
+    val advertiserName: String,
     val userProfileDraftId: UUID,
     val serviceInfo: String,
     val locationBrief: String,

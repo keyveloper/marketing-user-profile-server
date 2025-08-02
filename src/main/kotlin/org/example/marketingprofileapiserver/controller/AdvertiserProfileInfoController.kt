@@ -25,6 +25,7 @@ class AdvertiserProfileInfoController(
 
         val domain = AdvertiserProfile(
             advertiserId = request.advertiserId,
+            advertiserName = request.advertiserName,
             userProfileDraftId = request.userProfileDraftId,
             serviceInfo = request.serviceInfo,
             locationBrief = request.locationBrief,
@@ -74,6 +75,7 @@ class AdvertiserProfileInfoController(
     ): ResponseEntity<UpdateAdvertiserProfileInfoResponseFromServer> {
         val domain = AdvertiserProfile(
             advertiserId = request.advertiserId,
+            advertiserName = request.advertiserName,
             userProfileDraftId = request.userProfileDraftId,
             serviceInfo = request.serviceInfo,
             locationBrief = request.locationBrief,

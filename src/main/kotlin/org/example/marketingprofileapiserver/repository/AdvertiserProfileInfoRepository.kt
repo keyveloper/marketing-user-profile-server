@@ -20,6 +20,7 @@ class AdvertiserProfileInfoRepository {
         // Create new entity
         val entity = AdvertiserProfileInfoEntity.new {
             advertiserId = domain.advertiserId
+            advertiserName = domain.advertiserName
             userProfileDraftId = domain.userProfileDraftId
             serviceInfo = domain.serviceInfo
             locationBrief = domain.locationBrief
@@ -40,6 +41,7 @@ class AdvertiserProfileInfoRepository {
         val entity = AdvertiserProfileInfoEntity.findById(targetId)
         return if (entity != null) {
             entity.advertiserId = domain.advertiserId
+            entity.advertiserName = domain.advertiserName
             entity.userProfileDraftId = domain.userProfileDraftId
             entity.serviceInfo = domain.serviceInfo
             entity.locationBrief = domain.locationBrief
@@ -54,6 +56,7 @@ class AdvertiserProfileInfoRepository {
         val entity = findByAdvertiserId(advertiserId)
         return if (entity != null) {
             entity.advertiserId = domain.advertiserId
+            entity.advertiserName = domain.advertiserName
             entity.userProfileDraftId = domain.userProfileDraftId
             entity.serviceInfo = domain.serviceInfo
             entity.locationBrief = domain.locationBrief

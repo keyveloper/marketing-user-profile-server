@@ -7,6 +7,7 @@ class InfluencerProfileInfoEntity(id: EntityID<Long>): BaseDateEntity(id, Influe
     companion object: BaseDateEntityClass<InfluencerProfileInfoEntity>(InfluencerProfileInfosTable)
 
     var userProfileDraftId by InfluencerProfileInfosTable.userProfileDraftId
+    var influencerName by InfluencerProfileInfosTable.influencerName
     var influencerId by InfluencerProfileInfosTable.influencerId
     var introduction by InfluencerProfileInfosTable.introduction
     var job by InfluencerProfileInfosTable.job

@@ -5,6 +5,7 @@ import java.util.UUID
 data class InfluencerProfile(
     val id: Long? = null,
     val userProfileDraftId: UUID,
+    val influencerName: String,
     val influencerId: UUID,
     val introduction: String?,
     val job: String?,

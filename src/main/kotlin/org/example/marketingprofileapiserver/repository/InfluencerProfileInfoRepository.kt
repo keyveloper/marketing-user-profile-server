@@ -20,6 +20,7 @@ class InfluencerProfileInfoRepository {
         // Create new entity
         val entity = InfluencerProfileInfoEntity.new {
             userProfileDraftId = domain.userProfileDraftId
+            influencerName = domain.influencerName
             influencerId = domain.influencerId
             introduction = domain.introduction
             job = domain.job
@@ -39,6 +40,7 @@ class InfluencerProfileInfoRepository {
         val entity = InfluencerProfileInfoEntity.findById(targetId)
         return if (entity != null) {
             entity.userProfileDraftId = domain.userProfileDraftId
+            entity.influencerName = domain.influencerName
             entity.influencerId = domain.influencerId
             entity.introduction = domain.introduction
             entity.job = domain.job
@@ -52,6 +54,7 @@ class InfluencerProfileInfoRepository {
         val entity = findByInfluencerId(influencerId)
         return if (entity != null) {
             entity.userProfileDraftId = domain.userProfileDraftId
+            entity.influencerName = domain.influencerName
             entity.influencerId = domain.influencerId
             entity.introduction = domain.introduction
             entity.job = domain.job

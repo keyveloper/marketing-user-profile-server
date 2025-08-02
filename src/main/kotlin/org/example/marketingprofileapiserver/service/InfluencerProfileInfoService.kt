@@ -41,6 +41,7 @@ class InfluencerProfileInfoService(
             GetInfluencerProfileInfoResult(
                 id = entity.id.value,
                 userProfileDraftId = entity.userProfileDraftId,
+                influencerName = entity.influencerName,
                 influencerId = entity.influencerId,
                 introduction = entity.introduction,
                 job = entity.job,

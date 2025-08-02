@@ -4,6 +4,7 @@ import java.util.UUID
 
 data class UpdateAdvertiserProfileInfoApiRequest(
     val advertiserId: UUID,
+    val advertiserName: String,
     val userProfileDraftId: UUID,
     val serviceInfo: String,
     val locationBrief: String,
