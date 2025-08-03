@@ -1,13 +1,14 @@
 package org.example.marketingprofileapiserver.controller
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.example.marketingprofileapiserver.dto.AdvertiserProfile
+import org.example.marketingprofileapiserver.dto.UpdateAdvertiserProfile
 import org.example.marketingprofileapiserver.dto.controller.*
 import org.example.marketingprofileapiserver.enums.MSAServiceErrorCode
 import org.example.marketingprofileapiserver.service.AdvertiserProfileInfoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.util.UUID
 
 private val logger = KotlinLogging.logger {}
 
@@ -23,7 +24,7 @@ class AdvertiserProfileInfoController(
     ): ResponseEntity<SaveAdvertiserProfileInfoResponseFromServer> {
         logger.info { "saveAdvertiserProfileInfo called with request: $request" }
 
-        val domain = AdvertiserProfile(
+        val domain = UpdateAdvertiserProfile(
             advertiserId = request.advertiserId,
             advertiserName = request.advertiserName,
             userProfileDraftId = request.userProfileDraftId,
@@ -73,7 +74,7 @@ class AdvertiserProfileInfoController(
         @PathVariable advertiserId: String,
         @RequestBody request: UpdateAdvertiserProfileInfoApiRequest
     ): ResponseEntity<UpdateAdvertiserProfileInfoResponseFromServer> {
-        val domain = AdvertiserProfile(
+        val domain = UpdateAdvertiserProfile(
             advertiserId = request.advertiserId,
             advertiserName = request.advertiserName,
             userProfileDraftId = request.userProfileDraftId,
@@ -101,6 +102,21 @@ class AdvertiserProfileInfoController(
 
         val response = DeleteAdvertiserProfileInfoResponseFromServer.of(
             result = deleteAdvertiserProfileInfoResult,
+            httpStatus = HttpStatus.OK,
+            msaServiceErrorCode = MSAServiceErrorCode.OK
+        )
+
+        return ResponseEntity.ok().body(response)
+    }
+
+    @GetMapping("/by-ids")
+    fun getAdvertiserProfileInfosByIds(
+        @RequestParam advertiserIds: List<UUID>
+    ): ResponseEntity<GetAdvertiserProfileInfosByIdsResponseFromServer> {
+        val result = advertiserProfileInfoService.getAdvertiserProfileInfosByIds(advertiserIds)
+
+        val response = GetAdvertiserProfileInfosByIdsResponseFromServer.of(
+            result = result,
             httpStatus = HttpStatus.OK,
             msaServiceErrorCode = MSAServiceErrorCode.OK
         )

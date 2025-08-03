@@ -1,6 +1,6 @@
 package org.example.marketingprofileapiserver.service
 
-import org.example.marketingprofileapiserver.dto.AdvertiserProfile
+import org.example.marketingprofileapiserver.dto.UpdateAdvertiserProfile
 import org.example.marketingprofileapiserver.dto.service.*
 import org.example.marketingprofileapiserver.enums.MSAServiceErrorCode
 import org.example.marketingprofileapiserver.exception.MSAServerException
@@ -16,7 +16,7 @@ class AdvertiserProfileInfoService(
     private val advertiserProfileInfoRepository: AdvertiserProfileInfoRepository
 ) {
 
-    fun saveAdvertiserProfileInfo(domain: AdvertiserProfile): SaveAdvertiserProfileInfoResult {
+    fun saveAdvertiserProfileInfo(domain: UpdateAdvertiserProfile): SaveAdvertiserProfileInfoResult {
         return transaction {
             val savedId = advertiserProfileInfoRepository.save(domain)
             SaveAdvertiserProfileInfoResult(savedEntityId = savedId)
@@ -31,26 +31,26 @@ class AdvertiserProfileInfoService(
                 httpStatus = HttpStatus.BAD_REQUEST,
                 msaServiceErrorCode = MSAServiceErrorCode.INVALID_UUID_FORMAT,
                 logics = "AdvertiserProfileInfoService.getAdvertiserProfileInfoById",
-                message = "Invalid UUID format: $advertiserIdStr"
+                message = "Invalid UUID format: $advertiserIdStr $e"
             )
         }
         return transaction {
-            val entity = advertiserProfileInfoRepository.findByAdvertiserId(advertiserId) ?: return@transaction null
+            val info = advertiserProfileInfoRepository.findByAdvertiserId(advertiserId) ?: return@transaction null
             GetAdvertiserProfileInfoResult(
-                id = entity.id.value,
-                advertiserId = entity.advertiserId,
-                advertiserName = entity.advertiserName,
-                userProfileDraftId = entity.userProfileDraftId,
-                serviceInfo = entity.serviceInfo,
-                locationBrief = entity.locationBrief,
-                introduction = entity.introduction,
-                createdAt = entity.createdAt,
-                updatedAt = entity.updatedAt
+                id = info.id,
+                advertiserId = info.advertiserId,
+                advertiserName = info.advertiserName,
+                userProfileDraftId = info.userProfileDraftId,
+                serviceInfo = info.serviceInfo,
+                locationBrief = info.locationBrief,
+                introduction = info.introduction,
+                createdAt = info.createdAt,
+                updatedAt = info.updatedAt
             )
         }
     }
 
-    fun updateAdvertiserProfileInfoById(advertiserIdStr: String, domain: AdvertiserProfile)
+    fun updateAdvertiserProfileInfoById(advertiserIdStr: String, domain: UpdateAdvertiserProfile)
     : UpdateAdvertiserProfileInfoResult {
         val advertiserId = try {
             UUID.fromString(advertiserIdStr)
@@ -82,6 +82,13 @@ class AdvertiserProfileInfoService(
         return transaction {
             val deletedCount = advertiserProfileInfoRepository.deleteByAdvertiserId(advertiserId)
             DeleteAdvertiserProfileInfoResult(deletedCount = deletedCount)
+        }
+    }
+
+    fun getAdvertiserProfileInfosByIds(advertiserIds: List<UUID>): GetAdvertiserProfileInfosByIdsResult {
+        return transaction {
+            val infos = advertiserProfileInfoRepository.findAllByAdvertiserIds(advertiserIds)
+            GetAdvertiserProfileInfosByIdsResult(advertiserProfileInfos = infos)
         }
     }
 }

@@ -2,7 +2,7 @@ package org.example.marketingprofileapiserver.dto
 
 import java.util.UUID
 
-data class AdvertiserProfile(
+data class UpdateAdvertiserProfile(
     val id: Long? = null,
     val advertiserId: UUID,
     val advertiserName: String,

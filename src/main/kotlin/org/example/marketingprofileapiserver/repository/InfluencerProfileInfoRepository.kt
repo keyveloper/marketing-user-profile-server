@@ -1,19 +1,18 @@
 package org.example.marketingprofileapiserver.repository
 
-import org.example.marketingprofileapiserver.dto.InfluencerProfile
+import org.example.marketingprofileapiserver.dto.UpdateInfluencerProfile
 import org.example.marketingprofileapiserver.dto.InfluencerProfileInfoEntity
+import org.example.marketingprofileapiserver.dto.service.InfluencerProfileInfo
 import org.example.marketingprofileapiserver.exception.DuplicatedInfluencerProfileInfoEntityException
 import org.example.marketingprofileapiserver.table.InfluencerProfileInfosTable
 import org.springframework.stereotype.Repository
-import java.util.*
+import java.util.UUID
 
 @Repository
 class InfluencerProfileInfoRepository {
 
-    fun save(domain: InfluencerProfile): Long {
-        val existingEntity = findByInfluencerId(domain.influencerId)
-
-        if (existingEntity != null) {
+    fun save(domain: UpdateInfluencerProfile): Long {
+        if (existsByInfluencerId(domain.influencerId)) {
             throw DuplicatedInfluencerProfileInfoEntityException(domain.influencerId)
         }
 
@@ -28,15 +27,29 @@ class InfluencerProfileInfoRepository {
         return entity.id.value
     }
 
-    fun findById(targetId: Long): InfluencerProfileInfoEntity? {
-        return InfluencerProfileInfoEntity.findById(targetId)
+    fun findById(targetId: Long): InfluencerProfileInfo? {
+        val entity = InfluencerProfileInfoEntity.findById(targetId) ?: return null
+        return InfluencerProfileInfo.of(entity)
     }
 
-    fun findByInfluencerId(influencerId: UUID): InfluencerProfileInfoEntity? {
-        return InfluencerProfileInfoEntity.find { InfluencerProfileInfosTable.influencerId eq influencerId }.firstOrNull()
+    fun findByInfluencerId(influencerId: UUID): InfluencerProfileInfo? {
+        val entity = InfluencerProfileInfoEntity.find { InfluencerProfileInfosTable.influencerId eq influencerId }.firstOrNull() ?: return null
+        return InfluencerProfileInfo.of(entity)
     }
 
-    fun updateById(targetId: Long, domain: InfluencerProfile): Int {
+    fun findAllByInfluencerIds(influencerIds: List<UUID>): List<InfluencerProfileInfo> {
+        if (influencerIds.isEmpty()) {
+            return emptyList()
+        }
+        return InfluencerProfileInfoEntity.find { InfluencerProfileInfosTable.influencerId inList influencerIds }
+            .map { InfluencerProfileInfo.of(it) }
+    }
+
+    fun existsByInfluencerId(influencerId: UUID): Boolean {
+        return InfluencerProfileInfoEntity.find { InfluencerProfileInfosTable.influencerId eq influencerId }.firstOrNull() != null
+    }
+
+    fun updateById(targetId: Long, domain: UpdateInfluencerProfile): Int {
         val entity = InfluencerProfileInfoEntity.findById(targetId)
         return if (entity != null) {
             entity.userProfileDraftId = domain.userProfileDraftId
@@ -50,8 +63,8 @@ class InfluencerProfileInfoRepository {
         }
     }
 
-    fun updateByInfluencerId(influencerId: UUID, domain: InfluencerProfile): Int {
-        val entity = findByInfluencerId(influencerId)
+    fun updateByInfluencerId(influencerId: UUID, domain: UpdateInfluencerProfile): Int {
+        val entity = InfluencerProfileInfoEntity.find { InfluencerProfileInfosTable.influencerId eq influencerId }.firstOrNull()
         return if (entity != null) {
             entity.userProfileDraftId = domain.userProfileDraftId
             entity.influencerName = domain.influencerName
@@ -75,7 +88,7 @@ class InfluencerProfileInfoRepository {
     }
 
     fun deleteByInfluencerId(influencerId: UUID): Int {
-        val entity = findByInfluencerId(influencerId)
+        val entity = InfluencerProfileInfoEntity.find { InfluencerProfileInfosTable.influencerId eq influencerId }.firstOrNull()
         return if (entity != null) {
             entity.delete()
             1

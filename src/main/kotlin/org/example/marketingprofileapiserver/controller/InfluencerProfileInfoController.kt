@@ -1,13 +1,13 @@
 package org.example.marketingprofileapiserver.controller
 
-import org.example.marketingprofileapiserver.dto.InfluencerProfile
+import org.example.marketingprofileapiserver.dto.UpdateInfluencerProfile
 import org.example.marketingprofileapiserver.dto.controller.*
 import org.example.marketingprofileapiserver.enums.MSAServiceErrorCode
 import org.example.marketingprofileapiserver.service.InfluencerProfileInfoService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.*
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/influencer-profiles")
@@ -19,7 +19,7 @@ class InfluencerProfileInfoController(
     fun saveInfluencerProfileInfo(
         @RequestBody request: SaveInfluencerProfileInfoApiRequest
     ): ResponseEntity<SaveInfluencerProfileInfoResponseFromServer> {
-        val domain = InfluencerProfile(
+        val domain = UpdateInfluencerProfile(
             userProfileDraftId = request.userProfileDraftId,
             influencerName = request.influencerName,
             influencerId = request.influencerId,
@@ -68,7 +68,7 @@ class InfluencerProfileInfoController(
         @PathVariable influencerId: String,
         @RequestBody request: UpdateInfluencerProfileInfoApiRequest
     ): ResponseEntity<UpdateInfluencerProfileInfoResponseFromServer> {
-        val domain = InfluencerProfile(
+        val domain = UpdateInfluencerProfile(
             userProfileDraftId = request.userProfileDraftId,
             influencerName = request.influencerName,
             influencerId = request.influencerId,
@@ -100,5 +100,20 @@ class InfluencerProfileInfoController(
         )
 
         return ResponseEntity.ok(response)
+    }
+
+    @GetMapping("/by-ids")
+    fun getInfluencerProfileInfosByIds(
+        @RequestParam influencerIds: List<UUID>
+    ): ResponseEntity<GetInfluencerProfileInfosByIdsResponseFromServer> {
+        val result = influencerProfileInfoService.getInfluencerProfileInfosByIds(influencerIds)
+
+        val response = GetInfluencerProfileInfosByIdsResponseFromServer.of(
+            result = result,
+            httpStatus = HttpStatus.OK,
+            msaServiceErrorCode = MSAServiceErrorCode.OK
+        )
+
+        return ResponseEntity.ok().body(response)
     }
 }
