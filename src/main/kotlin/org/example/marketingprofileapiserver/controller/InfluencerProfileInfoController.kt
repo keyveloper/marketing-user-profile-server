@@ -7,7 +7,6 @@ import org.example.marketingprofileapiserver.service.InfluencerProfileInfoServic
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/influencer-profiles")
@@ -63,6 +62,21 @@ class InfluencerProfileInfoController(
         return ResponseEntity.ok(response)
     }
 
+    @PostMapping("/all")
+    fun getInfluencerProfileInfosByIds(
+        @RequestBody request: GetInfluencerProfileInfosByIdsApiRequest
+    ): ResponseEntity<GetInfluencerProfileInfosByIdsResponseFromServer> {
+        val result = influencerProfileInfoService.getInfluencerProfileInfosByIds(request.influencerIds)
+
+        val response = GetInfluencerProfileInfosByIdsResponseFromServer.of(
+            result = result,
+            httpStatus = HttpStatus.OK,
+            msaServiceErrorCode = MSAServiceErrorCode.OK
+        )
+
+        return ResponseEntity.ok().body(response)
+    }
+
     @PutMapping("/{influencerId}")
     fun updateInfluencerProfileInfoById(
         @PathVariable influencerId: String,
@@ -102,18 +116,5 @@ class InfluencerProfileInfoController(
         return ResponseEntity.ok(response)
     }
 
-    @GetMapping("/by-ids")
-    fun getInfluencerProfileInfosByIds(
-        @RequestParam influencerIds: List<UUID>
-    ): ResponseEntity<GetInfluencerProfileInfosByIdsResponseFromServer> {
-        val result = influencerProfileInfoService.getInfluencerProfileInfosByIds(influencerIds)
 
-        val response = GetInfluencerProfileInfosByIdsResponseFromServer.of(
-            result = result,
-            httpStatus = HttpStatus.OK,
-            msaServiceErrorCode = MSAServiceErrorCode.OK
-        )
-
-        return ResponseEntity.ok().body(response)
-    }
 }

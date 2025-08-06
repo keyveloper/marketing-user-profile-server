@@ -8,7 +8,6 @@ import org.example.marketingprofileapiserver.service.AdvertiserProfileInfoServic
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.UUID
 
 private val logger = KotlinLogging.logger {}
 
@@ -69,6 +68,21 @@ class AdvertiserProfileInfoController(
         return ResponseEntity.ok().body(response)
     }
 
+    @PostMapping("/all")
+    fun getAdvertiserProfileInfosByIds(
+        @RequestBody request: GetAdvertiserProfileInfosByIdsApiRequest
+    ): ResponseEntity<GetAdvertiserProfileInfosByIdsResponseFromServer> {
+        val result = advertiserProfileInfoService.getAdvertiserProfileInfosByIds(request.advertiserIds)
+
+        val response = GetAdvertiserProfileInfosByIdsResponseFromServer.of(
+            result = result,
+            httpStatus = HttpStatus.OK,
+            msaServiceErrorCode = MSAServiceErrorCode.OK
+        )
+
+        return ResponseEntity.ok().body(response)
+    }
+
     @PutMapping("/{advertiserId}")
     fun updateAdvertiserProfileInfoById(
         @PathVariable advertiserId: String,
@@ -109,18 +123,5 @@ class AdvertiserProfileInfoController(
         return ResponseEntity.ok().body(response)
     }
 
-    @GetMapping("/by-ids")
-    fun getAdvertiserProfileInfosByIds(
-        @RequestParam advertiserIds: List<UUID>
-    ): ResponseEntity<GetAdvertiserProfileInfosByIdsResponseFromServer> {
-        val result = advertiserProfileInfoService.getAdvertiserProfileInfosByIds(advertiserIds)
 
-        val response = GetAdvertiserProfileInfosByIdsResponseFromServer.of(
-            result = result,
-            httpStatus = HttpStatus.OK,
-            msaServiceErrorCode = MSAServiceErrorCode.OK
-        )
-
-        return ResponseEntity.ok().body(response)
-    }
 }

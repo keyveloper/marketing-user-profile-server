@@ -1,0 +1,21 @@
+
+@advertiserIds= ["64882d9c-10a1-7052-f283-384bc8eac3c9"]
+@influencerIds= ["14a80d8c-d021-70a9-ba28-5bab07c853c5"]
+@baseUrl= http://localhost:8082
+
+### Get Advertiser Profile Infos By Ids
+POST {{baseUrl}}/api/v1/advertiser-profiles/all
+Content-Type: application/json
+
+
+{
+  "advertiserIds": {{advertiserIds}}
+}
+
+### Get Influencer Profile Infos By Ids
+POST {{baseUrl}}/api/v1/influencer-profiles/all
+Content-Type: application/json
+
+{
+  "influencerIds": {{influencerIds}}
+}
